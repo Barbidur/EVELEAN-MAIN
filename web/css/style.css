@@ -1,0 +1,25 @@
+.red-bg {
+	background-color: #FF0000;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.logo {
+	width: 150px;
+}
+
+.center {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.white-bg {
+	background-color: #fff;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.no-pad {
+	padding: 0;
+}
