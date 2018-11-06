@@ -18,4 +18,26 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
+
+    /**
+     * @Route("/additional-details", name="detailspage")
+     */
+    public function detailsAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('default/details.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]);
+    }
+
+    /**
+     * @Route("/subdomain", name="subdomainpage")
+     */
+    public function subdomainAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('default/subdomain.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]);
+    }
 }

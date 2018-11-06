@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center">Share a few details about yourself</h2>
+
+        <p class="text-center">We'll make sure you get the most helpful resources.</p>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="first_name">Which option best describes you?</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="New business" checked>
+                            New business
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                            Existing business that's new to online marketing
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option1" checked>
+                            Established business with online marketing experience
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option1" checked>
+                            Consultant or Agency marketing multiple businesses
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="last_name">What industry will you be using Leadpages for</label>
+                    <select class="form-control">
+                        <option value="">Select an industry</option>
+                        <option>Industry 1</option>
+                        <option>Industry 2</option>
+                        <option>Industry 3</option>
+                        <option>Industry 4</option>
+                        <option>Industry 5</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="email">Do you own a domain for your business (exaple: wwww.myamazingbusiness.com)?</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="Yes" checked>
+                            Yes
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="No" checked>
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="password">How much do you spend on Facebook ads in an average month ?</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="Yes" checked>
+                            $0 - I'm not interested in Facebook Advertising
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="" checked>
+                            $0 - But I'm hoping to start Facebook Advertising soon
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="" checked>
+                            $5 - $200
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="" checked>
+                            $201 - $2,000
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios5" value="" checked>
+                            $2,001 - $10,000
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios6" value="" checked>
+                            $10,001+
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="password">What would you like to acheive first with Leadpages?</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="Yes" checked>
+                            Acquire new leads
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="" checked>
+                            Engage with my audience
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="" checked>
+                            Sell a product or service
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="" checked>
+                            Something else
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-6">
+                <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
