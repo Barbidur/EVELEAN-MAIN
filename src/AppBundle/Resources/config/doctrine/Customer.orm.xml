@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Customer" table="customer">
+    <unique-constraints>
+      <unique-constraint name="customer_email" columns="customer_email"/>
+    </unique-constraints>
+    <id name="customerId" type="bigint" column="customer_id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="customerEmail" type="string" column="customer_email" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="customerCompany" type="string" column="customer_company" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="customerFname" type="string" column="customer_fname" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="customerLname" type="string" column="customer_lname" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="customerCountry" type="string" column="customer_country" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="customerReceiveUpdate" type="boolean" column="customer_receive_update" nullable="false"/>
+    <field name="customerBelongToGroup" type="boolean" column="customer_belong_to_group" nullable="false"/>
+    <field name="createDt" type="datetime" column="create_dt" nullable="true">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <field name="updateDt" type="datetime" column="update_dt" nullable="true">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

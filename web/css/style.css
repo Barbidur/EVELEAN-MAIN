@@ -23,3 +23,22 @@
 .no-pad {
 	padding: 0;
 }
+
+ul.check {
+  margin-top: 0;
+  padding-left: 2em;
+  list-style-type: none;
+}
+.check li:before {
+  position: absolute;
+  margin-left: -1.3em;
+  font-weight: bold;
+}
+.check li.valid:before {
+  content: "\2713";
+  color: darkgreen;
+}
+.check li.invalid:before {
+  content: "\2717";
+  color: crimson;
+}

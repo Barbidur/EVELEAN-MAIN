@@ -2,88 +2,118 @@
 
 {% block body %}
     <div class="container">
-        <h2 class="text-center">Let's set up your account.</h2>
+        <form action="#" method="post" id="new_customer">
+            <h2 class="text-center">Let's set up your account.</h2>
 
-        <p class="text-center">Share some info to kickstart youir free 14 day trial of the Pro plan.</p>
+            <p class="text-center">Share some info to kickstart youir free 14 day trial of the Pro plan.</p>
 
-        <div class="row">
-            <div class="col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <label for="first_name">First Name</label>
-                    <input type="text" class="form-control" id="first_name" placeholder="">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="">
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" placeholder="">
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="">
-                    <span id="helpBlock" class="help-block">You'll use this to sign in to your account later.</span>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="">
+                        <span id="helpBlock" class="help-block">You'll use this to sign in to your account later.</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select class="selectpicker countrypicker form-control" data-live-search="true" id="country" name="country" ></select>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <label for="country">Country</label>
-                    <select class="selectpicker countrypicker form-control" data-live-search="true" ></select>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <label for="password">Create a password</label>
-                    <input type="password" class="form-control" id="password" placeholder="">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="password">Create a password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="password1">Re-enter password</label>
+                        <input type="password" class="form-control" id="password1" name="password1" placeholder="" onblur="checkPassword();">
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <label for="password1">Re-enter password</label>
-                    <input type="password" class="form-control" id="password1" placeholder="">
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-6 col-xs-12">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> My account will belong to a group
-                    </label>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="belong_to_group" name="belong_to_group"> My account will belong to a group
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="owner_tag_id" name="owner_tag_id" placeholder="Input Owner Tag Id">
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="owner_tag_id" placeholder="Input Owner Tag Id">
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> I'd like to receive updates, tips, and offers via email.
-                    </label>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="receive_updates" name="receive_updates" name=""> I'd like to receive updates, tips, and offers via email.
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-6 col-xs-12">
-                <span id="helpBlock" class="help-block">By continuing, I acknowledge that I've read and agree to the Terms of Service & Privacy Policy.</span>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <span id="helpBlock" class="help-block">By continuing, I acknowledge that I've read and agree to the Terms of Service & Privacy Policy.</span>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+                </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
-                <button type="submit" class="btn btn-primary btn-lg">Continue</button>
-            </div>
-        </div>
+        </form>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#password').PassRequirements();
+
+        function checkPassword(){
+            var pswd = $('#password').val();
+            var match = "Passwords do not match";
+            if ($('#password1').val() !== pswd) {
+                match = "Passwords do not match";
+            } else {
+                match = "Passwords match";
+            }
+            return match;
+        }
+
+        $('#password1').on('keyup', function () {
+            $(this).popover({
+                title: 'Password match test',
+                trigger: 'keyup',
+                html: true,
+                placement: 'bottom',
+                content: checkPassword()
+            });
+        });
+    </script>
+    
 {% endblock %}

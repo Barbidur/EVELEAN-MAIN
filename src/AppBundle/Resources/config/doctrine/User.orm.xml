@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\User" table="user">
+    <indexes>
+      <index name="user_customer_id_idx" columns="customer_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="user_login" columns="user_login"/>
+    </unique-constraints>
+    <id name="userId" type="bigint" column="user_id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="userLogin" type="string" column="user_login" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="userPassword" type="string" column="user_password" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="createDt" type="datetime" column="create_dt" nullable="true">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <field name="updateDt" type="datetime" column="update_dt" nullable="true">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="customer" target-entity="Customer" fetch="LAZY">
+      <join-columns>
+        <join-column name="customer_id" referenced-column-name="customer_id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

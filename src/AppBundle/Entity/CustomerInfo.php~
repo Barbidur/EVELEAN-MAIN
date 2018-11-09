@@ -1,0 +1,92 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CustomerInfo
+ *
+ * @ORM\Table(name="customer_info", indexes={@ORM\Index(name="customer_info_customer_id_idx", columns={"customer_id"})})
+ * @ORM\Entity
+ */
+class CustomerInfo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="customer_info_business_type", type="integer", nullable=false)
+     */
+    private $customerInfoBusinessType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_info_industry", type="string", length=255, nullable=false)
+     */
+    private $customerInfoIndustry;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="customer_info_has_domain", type="boolean", nullable=false)
+     */
+    private $customerInfoHasDomain;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="customer_info_facebook_ads_expenditure", type="bigint", nullable=false)
+     */
+    private $customerInfoFacebookAdsExpenditure;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_info_leadpages_target", type="string", length=255, nullable=false)
+     */
+    private $customerInfoLeadpagesTarget;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="customer_info_domain", type="boolean", nullable=false)
+     */
+    private $customerInfoDomain;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="create_dt", type="datetime", nullable=true)
+     */
+    private $createDt = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_dt", type="datetime", nullable=true)
+     */
+    private $updateDt = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="customer_info_id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $customerInfoId;
+
+    /**
+     * @var \AppBundle\Entity\Customer
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="customer_id", referencedColumnName="customer_id")
+     * })
+     */
+    private $customer;
+
+
+}
+

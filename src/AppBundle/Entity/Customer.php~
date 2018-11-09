@@ -1,0 +1,89 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Customer
+ *
+ * @ORM\Table(name="customer", uniqueConstraints={@ORM\UniqueConstraint(name="customer_email", columns={"customer_email"})})
+ * @ORM\Entity
+ */
+class Customer
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_email", type="string", length=255, nullable=false)
+     */
+    private $customerEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_company", type="string", length=255, nullable=false)
+     */
+    private $customerCompany;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_fname", type="string", length=255, nullable=false)
+     */
+    private $customerFname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_lname", type="string", length=255, nullable=false)
+     */
+    private $customerLname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_country", type="string", length=255, nullable=false)
+     */
+    private $customerCountry;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="customer_receive_update", type="boolean", nullable=false)
+     */
+    private $customerReceiveUpdate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="customer_belong_to_group", type="boolean", nullable=false)
+     */
+    private $customerBelongToGroup;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="create_dt", type="datetime", nullable=true)
+     */
+    private $createDt = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_dt", type="datetime", nullable=true)
+     */
+    private $updateDt = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="customer_id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $customerId;
+
+
+}
+
