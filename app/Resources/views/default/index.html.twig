@@ -2,22 +2,29 @@
 
 {% block body %}
     <div class="container">
-        <form action="#" method="post" id="new_customer">
+        <form action="#" method="post" id="new_customer" role="form" data-toggle="validator">
             <h2 class="text-center">Let's set up your account.</h2>
 
             <p class="text-center">Share some info to kickstart youir free 14 day trial of the Pro plan.</p>
+
+            <div id="status" style='display:none'>
+                <div class="row">
+                    <p class="text-center">Loading...Please wait</p>
+                    <img src="{{ asset('images/hourglass.gif') }}" class="img-responsive center" >
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="">
+                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="" required="required">
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="">
+                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="" required="required">
                     </div>
                 </div>
             </div>
@@ -26,14 +33,17 @@
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="" required="required">
                         <span id="helpBlock" class="help-block">You'll use this to sign in to your account later.</span>
+                        <div id="email-validation">
+                            <ul class="check"></ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label for="country">Country</label>
-                        <select class="selectpicker countrypicker form-control" data-live-search="true" id="country" name="country" ></select>
+                        <select class="selectpicker countrypicker form-control" data-live-search="true" id="country" name="country"  required="required"></select>
                     </div>
                 </div>
             </div>
@@ -42,13 +52,16 @@
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label for="password">Create a password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="" required="required">
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label for="password1">Re-enter password</label>
-                        <input type="password" class="form-control" id="password1" name="password1" placeholder="" onblur="checkPassword();">
+                        <input type="password" class="form-control" id="password1" name="password1" placeholder="" required="required">
+                        <div id="password-match">
+                            <ul class="check"></ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,7 +96,7 @@
                     <span id="helpBlock" class="help-block">By continuing, I acknowledge that I've read and agree to the Terms of Service & Privacy Policy.</span>
                 </div>
                 <div class="col-sm-6 col-xs-12">
-                    <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+                    <button type="submit" id="form-submit" class="btn btn-primary btn-lg" disabled="disabled">Continue</button>
                 </div>
             </div>
         </form>
@@ -94,25 +107,44 @@
     <script>
         $('#password').PassRequirements();
 
-        function checkPassword(){
-            var pswd = $('#password').val();
-            var match = "Passwords do not match";
-            if ($('#password1').val() !== pswd) {
-                match = "Passwords do not match";
+        function checkPasswordMatch(){
+            if ($('#password1').val() == $('#password').val()) {
+                $('#password-match .check').html('<li class="valid">Passwords match</li>');
+                $('#password-match').show();
+                $('#form-submit').prop("disabled", false);
             } else {
-                match = "Passwords match";
+                $('#password-match .check').html('<li class="invalid">Passwords do not match</li>');
+                $('#password-match').show();
             }
-            return match;
         }
 
-        $('#password1').on('keyup', function () {
-            $(this).popover({
-                title: 'Password match test',
-                trigger: 'keyup',
-                html: true,
-                placement: 'bottom',
-                content: checkPassword()
-            });
+        var timer = null;
+        $('#password1').keydown(function(){
+           clearTimeout(timer); 
+           timer = setTimeout(checkPasswordMatch, 1000);
+        });
+
+        $('#email').on('blur', function(){
+            $.ajax({
+                type: "POST",
+                url: 'checkemail',
+                data: 'email='+ $(this).val(),
+                dataType: 'JSON',
+                beforeSend: function() {
+                    $('#status').show();
+                },
+                success: function(result) {
+                    $('#status').hide();
+                    if (result.data == 'success' &&  $('#email').val() != '') {
+                        $('#email-validation .check').html('<li class="valid">Email is valid and can be used</li>');
+                        $('#email-validation').show();
+                    } else {
+                        $('#email-validation .check').html('<li class="invalid">Email is invalid and cannnot be used</li>');
+                        $('#email-validation').show();
+                        $('#email').focus();
+                    }            
+                }
+            })
         });
     </script>
     

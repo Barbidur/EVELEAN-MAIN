@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container">
-        <form>
+        <form action="#" method="post" id="subdomain_update" role="form" data-toggle="validator">
             <h2 class="text-center"></h2>
             <div class="row">
                 <div class="col-xs-12">
@@ -10,7 +10,7 @@
                         <label for="subdomain">Create your subdomain</label>
                         <div class="input-group">
                             <span class="input-group-addon">https://</span>
-                            <input type="text" class="form-control" id="subdomain" name="subdomain" placeholder="your-company">
+                            <input type="text" class="form-control" id="subdomain" name="subdomain" placeholder="your-company" required="required">
                             <span class="input-group-addon">.evelean.com</span>
                         </div>
                     </div>

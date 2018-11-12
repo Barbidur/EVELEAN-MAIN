@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class CustomerInfo
 {
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="customer_info_business_type", type="integer", nullable=false)
+     * @ORM\Column(name="customer_info_business_type", type="string", length=255, nullable=false)
      */
     private $customerInfoBusinessType;
 
@@ -34,9 +34,9 @@ class CustomerInfo
     private $customerInfoHasDomain;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="customer_info_facebook_ads_expenditure", type="bigint", nullable=false)
+     * @ORM\Column(name="customer_info_facebook_ads_expenditure", type="string", length=255, nullable=false)
      */
     private $customerInfoFacebookAdsExpenditure;
 
@@ -48,9 +48,9 @@ class CustomerInfo
     private $customerInfoLeadpagesTarget;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="customer_info_domain", type="boolean", nullable=true)
+     * @ORM\Column(name="customer_info_domain", type="string", length=255, nullable=true)
      */
     private $customerInfoDomain;
 
@@ -92,7 +92,7 @@ class CustomerInfo
     /**
      * Set customerInfoBusinessType
      *
-     * @param integer $customerInfoBusinessType
+     * @param string $customerInfoBusinessType
      *
      * @return CustomerInfo
      */
@@ -106,7 +106,7 @@ class CustomerInfo
     /**
      * Get customerInfoBusinessType
      *
-     * @return integer
+     * @return string
      */
     public function getCustomerInfoBusinessType()
     {
@@ -164,7 +164,7 @@ class CustomerInfo
     /**
      * Set customerInfoFacebookAdsExpenditure
      *
-     * @param integer $customerInfoFacebookAdsExpenditure
+     * @param string $customerInfoFacebookAdsExpenditure
      *
      * @return CustomerInfo
      */
@@ -178,7 +178,7 @@ class CustomerInfo
     /**
      * Get customerInfoFacebookAdsExpenditure
      *
-     * @return integer
+     * @return string
      */
     public function getCustomerInfoFacebookAdsExpenditure()
     {
@@ -212,7 +212,7 @@ class CustomerInfo
     /**
      * Set customerInfoDomain
      *
-     * @param boolean $customerInfoDomain
+     * @param string $customerInfoDomain
      *
      * @return CustomerInfo
      */
@@ -226,7 +226,7 @@ class CustomerInfo
     /**
      * Get customerInfoDomain
      *
-     * @return boolean
+     * @return string
      */
     public function getCustomerInfoDomain()
     {

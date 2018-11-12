@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\CustomerInfo;
 use AppBundle\Entity\User;
@@ -125,12 +126,46 @@ class DefaultController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $subdomain = $request->get('subdomain');
-            $customer_info->setCustomerInfoDomain("https://".$customerInfoDomain."evelean.com");
+            $subdomain = "https://".$subdomain.".evelean.com";
+            $customer_info->setCustomerInfoDomain($subdomain);
+
             $em->persist($customer_info);
             $em->flush();
         }
         return $this->render('default/subdomain.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
+    }
+
+    /**
+     * @Route("/checkemail", name="checkemail")
+     * @Method({"GET", "POST"})
+     */
+    public function checkemailAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $validation = 'success';
+
+        if($request->isXmlHttpRequest()) { 
+            if ($request->getMethod() == 'POST') {
+                $email = $request->get('email');
+                $customer = $em->getRepository('AppBundle:Customer')->findBy(array('customerEmail' => $email));
+
+                if(count($customer) > 0) {
+                    $validation = 'invalid';
+                } else {
+                    $validation = 'success';
+                }
+
+                $response = new JsonResponse();
+                    $response->setData(array(
+                        'data' => $validation
+                    ));
+                    return $response;
+            }
+        } else {
+            throw new \Exception("You are not authorised to perform this action");
+        }
     }
 }
