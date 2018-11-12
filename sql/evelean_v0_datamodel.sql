@@ -40,8 +40,8 @@ DROP TABLE IF EXISTS evelean.customer_info ;
 CREATE TABLE IF NOT EXISTS evelean.customer_info (
  customer_info_id BIGINT NOT NULL AUTO_INCREMENT,
  customer_id BIGINT NOT NULL,
- customer_info_business_type INT(10) NOT NULL,
- customer_info_industry VARCHAR(255) NOT NULL,
+ customer_info_business_type varchar(255) NOT NULL,
+ customer_info_industry varchar(255) NOT NULL,
  customer_info_has_domain BOOLEAN NOT NULL,
  customer_info_facebook_ads_expenditure VARCHAR(255) NOT NULL,
  customer_info_leadpages_target VARCHAR(255) NOT NULL,
