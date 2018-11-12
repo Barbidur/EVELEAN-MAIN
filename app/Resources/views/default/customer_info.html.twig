@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<h2 class="text-center">View displaying customer info</h2>
+
+		<table class="table table-striped footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint breakpoint-xs">
+			<thead class="footable-header">
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th data-breakpoints="xs">Email</th>
+					<th data-breakpoints="xs">Country</th>
+					<th data-breakpoints="xs">Company</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for customer in customers %}
+					<tr>
+						<td>{{ customer.customerFname }}</td>
+						<td>{{ customer.customerLname }}</td>
+						<td>{{ customer.customerEmail }}</td>
+						<td>{{ customer.customerCountry }}</td>
+						<td>{{ customer.customerCompany }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}

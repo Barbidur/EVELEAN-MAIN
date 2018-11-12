@@ -168,4 +168,19 @@ class DefaultController extends Controller
             throw new \Exception("You are not authorised to perform this action");
         }
     }
+
+    /**
+     * @Route("/customers", name="listcustomerpage")
+     * @Method({"GET", "POST"})
+     */
+    public function listcustomerAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $customers = $em->getRepository('AppBundle:Customer')->findAll();
+
+        return $this->render('default/customer_info.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'customers' => $customers
+        ]);
+    }
 }
