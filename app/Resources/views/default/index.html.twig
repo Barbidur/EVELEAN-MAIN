@@ -107,6 +107,18 @@
     <script>
         $('#password').PassRequirements();
 
+        $('#password').on('blur', function(){
+            var password = $('#password').val();
+            var containNumbers = new RegExp('[^0-9]', 'g');
+            var containLowercase = new RegExp('[^a-z]', 'g');
+            var containUppercase = new RegExp('[^A-Z]', 'g');
+            var minlength = 8;
+
+            if (password.test(containNumbers) && password.test(containLowercase) && password.test(containUppercase) && password.size() >= 8) {
+                
+            }
+        })
+
         function checkPasswordMatch(){
             if ($('#password1').val() == $('#password').val()) {
                 $('#password-match .check').html('<li class="valid">Passwords match</li>');

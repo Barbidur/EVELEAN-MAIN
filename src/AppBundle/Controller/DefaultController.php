@@ -99,6 +99,8 @@ class DefaultController extends Controller
             $customer_info->setCustomerInfoHasDomain($own_domain);
             $customer_info->setCustomerInfoFacebookAdsExpenditure($facebook_ads_expenditure);
             $customer_info->setCustomerInfoLeadpagesTarget($leadpages_target);
+            $subdomain = "https://subdomain.evelean.com";
+            $customer_info->setCustomerInfoDomain($subdomain);
             $date = new \DateTime();
             $customer_info->setCreateDt($date);
             $customer_info->setUpdateDt($date);
@@ -128,6 +130,8 @@ class DefaultController extends Controller
             $subdomain = $request->get('subdomain');
             $subdomain = "https://".$subdomain.".evelean.com";
             $customer_info->setCustomerInfoDomain($subdomain);
+            $date = new \DateTime();
+            $customer_info->setUpdateDt($date);
 
             $em->persist($customer_info);
             $em->flush();
@@ -182,5 +186,43 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'customers' => $customers
         ]);
+    }
+
+    /**
+     * @Route("/checkout", name="order_checkout")
+     * @Method({"GET", "POST"})
+     */
+    public function checkoutAction()
+    {
+        \Stripe\Stripe::setApiKey("sk_test_uFpH3aKmtmsNrz6ikc7oor7v");
+
+        // Get the credit card details submitted by the form
+        $token = $_POST['stripeToken'];
+
+        // Create a charge: this will charge the user's card
+        try {
+            $charge = \Stripe\Charge::create(array(
+                "amount" => 5000, // Amount in cents
+                "currency" => "usd",
+                "source" => $token,
+                "description" => "Paiement Stripe - Fujaco"
+            ));
+            $this->addFlash("success","Bravo ça marche !");
+            return $this->redirectToRoute("order_prepare");
+        } catch(\Stripe\Error\Card $e) {
+
+            $this->addFlash("error","Snif ça marche pas :(");
+            return $this->redirectToRoute("order_prepare");
+            // The card has been declined
+        }
+    }
+
+    /**
+     * @Route("/order", name="order_prepare")
+     * @Method({"GET", "POST"})
+     */
+    public function prepareorderAction()
+    {
+        return $this->render('default/checkout.html.twig');
     }
 }

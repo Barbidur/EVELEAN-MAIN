@@ -44,5 +44,6 @@
         <option name="default">CURRENT_TIMESTAMP</option>
       </options>
     </field>
+    <one-to-many field="customer_infos" target-entity="CustomerInfo" mapped-by="customer_infos" fetch="LAZY" />
   </entity>
 </doctrine-mapping>

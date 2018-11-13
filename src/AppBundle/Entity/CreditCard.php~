@@ -53,5 +53,110 @@ class CreditCard
     private $customer;
 
 
-}
 
+    /**
+     * Set creditCardStripeToken
+     *
+     * @param string $creditCardStripeToken
+     *
+     * @return CreditCard
+     */
+    public function setCreditCardStripeToken($creditCardStripeToken)
+    {
+        $this->creditCardStripeToken = $creditCardStripeToken;
+
+        return $this;
+    }
+
+    /**
+     * Get creditCardStripeToken
+     *
+     * @return string
+     */
+    public function getCreditCardStripeToken()
+    {
+        return $this->creditCardStripeToken;
+    }
+
+    /**
+     * Set createDt
+     *
+     * @param \DateTime $createDt
+     *
+     * @return CreditCard
+     */
+    public function setCreateDt($createDt)
+    {
+        $this->createDt = $createDt;
+
+        return $this;
+    }
+
+    /**
+     * Get createDt
+     *
+     * @return \DateTime
+     */
+    public function getCreateDt()
+    {
+        return $this->createDt;
+    }
+
+    /**
+     * Set updateDt
+     *
+     * @param \DateTime $updateDt
+     *
+     * @return CreditCard
+     */
+    public function setUpdateDt($updateDt)
+    {
+        $this->updateDt = $updateDt;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDt
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDt()
+    {
+        return $this->updateDt;
+    }
+
+    /**
+     * Get creditCardId
+     *
+     * @return integer
+     */
+    public function getCreditCardId()
+    {
+        return $this->creditCardId;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param \AppBundle\Entity\Customer $customer
+     *
+     * @return CreditCard
+     */
+    public function setCustomer(\AppBundle\Entity\Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \AppBundle\Entity\Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+}

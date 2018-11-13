@@ -22,3 +22,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    stripe_public_key: pk_test_eh3KOtCG8Jy1GAW7zRejuX3F
+    stripe_secret_key: sk_test_uFpH3aKmtmsNrz6ikc7oor7v

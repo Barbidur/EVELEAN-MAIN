@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Customer
@@ -84,6 +85,15 @@ class Customer
      */
     private $customerId;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CustomerInfo")
+     */
+    protected $customer_infos;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->customer_infos = new ArrayCollection();
+    }
 
 
     /**
@@ -310,5 +320,40 @@ class Customer
     public function getCustomerId()
     {
         return $this->customerId;
+    }
+
+
+    /**
+     * Add customerInfo
+     *
+     * @param \AppBundle\Entity\CustomerInfo $customerInfo
+     *
+     * @return Customer
+     */
+    public function addCustomerInfo(\AppBundle\Entity\CustomerInfo $customerInfo)
+    {
+        $this->customer_infos[] = $customerInfo;
+
+        return $this;
+    }
+
+    /**
+     * Remove customerInfo
+     *
+     * @param \AppBundle\Entity\CustomerInfo $customerInfo
+     */
+    public function removeCustomerInfo(\AppBundle\Entity\CustomerInfo $customerInfo)
+    {
+        $this->customer_infos->removeElement($customerInfo);
+    }
+
+    /**
+     * Get customerInfos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCustomerInfos()
+    {
+        return $this->customer_infos;
     }
 }

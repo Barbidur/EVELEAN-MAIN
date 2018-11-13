@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Customer
@@ -84,6 +85,275 @@ class Customer
      */
     private $customerId;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CustomerInfo", mappedBy="customerinfo")
+     */
+    protected $customer_infos;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->customer_infos = new ArrayCollection();
+    }
 
+
+    /**
+     * Set customerEmail
+     *
+     * @param string $customerEmail
+     *
+     * @return Customer
+     */
+    public function setCustomerEmail($customerEmail)
+    {
+        $this->customerEmail = $customerEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get customerEmail
+     *
+     * @return string
+     */
+    public function getCustomerEmail()
+    {
+        return $this->customerEmail;
+    }
+
+    /**
+     * Set customerCompany
+     *
+     * @param string $customerCompany
+     *
+     * @return Customer
+     */
+    public function setCustomerCompany($customerCompany)
+    {
+        $this->customerCompany = $customerCompany;
+
+        return $this;
+    }
+
+    /**
+     * Get customerCompany
+     *
+     * @return string
+     */
+    public function getCustomerCompany()
+    {
+        return $this->customerCompany;
+    }
+
+    /**
+     * Set customerFname
+     *
+     * @param string $customerFname
+     *
+     * @return Customer
+     */
+    public function setCustomerFname($customerFname)
+    {
+        $this->customerFname = $customerFname;
+
+        return $this;
+    }
+
+    /**
+     * Get customerFname
+     *
+     * @return string
+     */
+    public function getCustomerFname()
+    {
+        return $this->customerFname;
+    }
+
+    /**
+     * Set customerLname
+     *
+     * @param string $customerLname
+     *
+     * @return Customer
+     */
+    public function setCustomerLname($customerLname)
+    {
+        $this->customerLname = $customerLname;
+
+        return $this;
+    }
+
+    /**
+     * Get customerLname
+     *
+     * @return string
+     */
+    public function getCustomerLname()
+    {
+        return $this->customerLname;
+    }
+
+    /**
+     * Set customerCountry
+     *
+     * @param string $customerCountry
+     *
+     * @return Customer
+     */
+    public function setCustomerCountry($customerCountry)
+    {
+        $this->customerCountry = $customerCountry;
+
+        return $this;
+    }
+
+    /**
+     * Get customerCountry
+     *
+     * @return string
+     */
+    public function getCustomerCountry()
+    {
+        return $this->customerCountry;
+    }
+
+    /**
+     * Set customerReceiveUpdate
+     *
+     * @param boolean $customerReceiveUpdate
+     *
+     * @return Customer
+     */
+    public function setCustomerReceiveUpdate($customerReceiveUpdate)
+    {
+        $this->customerReceiveUpdate = $customerReceiveUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get customerReceiveUpdate
+     *
+     * @return boolean
+     */
+    public function getCustomerReceiveUpdate()
+    {
+        return $this->customerReceiveUpdate;
+    }
+
+    /**
+     * Set customerBelongToGroup
+     *
+     * @param boolean $customerBelongToGroup
+     *
+     * @return Customer
+     */
+    public function setCustomerBelongToGroup($customerBelongToGroup)
+    {
+        $this->customerBelongToGroup = $customerBelongToGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get customerBelongToGroup
+     *
+     * @return boolean
+     */
+    public function getCustomerBelongToGroup()
+    {
+        return $this->customerBelongToGroup;
+    }
+
+    /**
+     * Set createDt
+     *
+     * @param \DateTime $createDt
+     *
+     * @return Customer
+     */
+    public function setCreateDt($createDt)
+    {
+        $this->createDt = $createDt;
+
+        return $this;
+    }
+
+    /**
+     * Get createDt
+     *
+     * @return \DateTime
+     */
+    public function getCreateDt()
+    {
+        return $this->createDt;
+    }
+
+    /**
+     * Set updateDt
+     *
+     * @param \DateTime $updateDt
+     *
+     * @return Customer
+     */
+    public function setUpdateDt($updateDt)
+    {
+        $this->updateDt = $updateDt;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDt
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDt()
+    {
+        return $this->updateDt;
+    }
+
+    /**
+     * Get customerId
+     *
+     * @return integer
+     */
+    public function getCustomerId()
+    {
+        return $this->customerId;
+    }
+
+
+    /**
+     * Add customerInfo
+     *
+     * @param \AppBundle\Entity\CustomerInfo $customerInfo
+     *
+     * @return Customer
+     */
+    public function addCustomerInfo(\AppBundle\Entity\CustomerInfo $customerInfo)
+    {
+        $this->customer_infos[] = $customerInfo;
+
+        return $this;
+    }
+
+    /**
+     * Remove customerInfo
+     *
+     * @param \AppBundle\Entity\CustomerInfo $customerInfo
+     */
+    public function removeCustomerInfo(\AppBundle\Entity\CustomerInfo $customerInfo)
+    {
+        $this->customer_infos->removeElement($customerInfo);
+    }
+
+    /**
+     * Get customerInfos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCustomerInfos()
+    {
+        return $this->customer_infos;
+    }
 }
-
