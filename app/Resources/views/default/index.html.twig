@@ -53,6 +53,9 @@
                     <div class="form-group">
                         <label for="password">Create a password</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="" required="required">
+                        <div id="password-validation">
+                            <ul class="check"></ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
@@ -114,8 +117,21 @@
             var containUppercase = new RegExp('[^A-Z]', 'g');
             var minlength = 8;
 
-            if (password.test(containNumbers) && password.test(containLowercase) && password.test(containUppercase) && password.size() >= 8) {
-                
+            var success = false;
+
+            if (containNumbers.test(password) && containLowercase.test(password) && containUppercase.test(password) && password.length >= 8) {
+                success = true;
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                $('#password').focus();
+                $('#password-validation .check').html('<li class="invalid">Password do not match all requirements</li>');
+                $('#password-validation').show();
+            } else {
+                $('#password-validation .check').html('<li class="valid">Password match all requirements</li>');
+                $('#password-validation').show();
             }
         })
 
@@ -127,6 +143,7 @@
             } else {
                 $('#password-match .check').html('<li class="invalid">Passwords do not match</li>');
                 $('#password-match').show();
+                $('#password1').focus();
             }
         }
 
@@ -156,7 +173,7 @@
                         $('#email').focus();
                     }            
                 }
-            })
+            });
         });
     </script>
     

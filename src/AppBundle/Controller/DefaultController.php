@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\CustomerInfo;
 use AppBundle\Entity\User;
+use AppBundle\Entity\CreditCard;
 
 class DefaultController extends Controller
 {
@@ -109,7 +110,7 @@ class DefaultController extends Controller
             $em->persist($customer_info);
             $em->flush();
 
-            return $this->redirectToRoute('subdomainpage', array('id' => $customer_info->getCustomerInfoId()));
+            return $this->redirectToRoute('subdomainpage', array('id' => $customer_info->getCustomerInfoId(), 'customer_info' => $customer_info));
         }
 
         return $this->render('default/details.html.twig', [
@@ -126,18 +127,10 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($request->getMethod() == 'POST') {
-            $subdomain = $request->get('subdomain');
-            $subdomain = "https://".$subdomain.".evelean.com";
-            $customer_info->setCustomerInfoDomain($subdomain);
-            $date = new \DateTime();
-            $customer_info->setUpdateDt($date);
-
-            $em->persist($customer_info);
-            $em->flush();
-        }
+        
         return $this->render('default/subdomain.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'customer_info' => $customer_info
         ]);
     }
 
@@ -163,10 +156,10 @@ class DefaultController extends Controller
                 }
 
                 $response = new JsonResponse();
-                    $response->setData(array(
-                        'data' => $validation
-                    ));
-                    return $response;
+                $response->setData(array(
+                    'data' => $validation
+                ));
+                return $response;
             }
         } else {
             throw new \Exception("You are not authorised to perform this action");
@@ -189,40 +182,93 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/checkout", name="order_checkout")
+     * @Route("/savesubdomain", name="save_subdomain")
      * @Method({"GET", "POST"})
      */
-    public function checkoutAction()
+    public function savesubdomainAction(Request $request)
     {
-        \Stripe\Stripe::setApiKey("sk_test_uFpH3aKmtmsNrz6ikc7oor7v");
+        $em = $this->getDoctrine()->getManager();
 
-        // Get the credit card details submitted by the form
-        $token = $_POST['stripeToken'];
+        $validation = 'success';
 
-        // Create a charge: this will charge the user's card
-        try {
-            $charge = \Stripe\Charge::create(array(
-                "amount" => 5000, // Amount in cents
-                "currency" => "usd",
-                "source" => $token,
-                "description" => "Paiement Stripe - Fujaco"
+        if($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager(); 
+            $subdomain = $request->get('subdomain');
+            $customer_info_id = $request->get('customer_info_id');
+            $customer_info = $em->getRepository('AppBundle:CustomerInfo')->find($customer_info_id);
+            $subdomain = "https://".$subdomain.".evelean.com";
+            $customer_info->setCustomerInfoDomain($subdomain);
+            $date = new \DateTime();
+            $customer_info->setUpdateDt($date);
+
+            try {
+                $em->persist($customer_info);
+                $em->flush();
+                $validation = 'success';
+            } catch(Exception $e) {
+                $validation = $e->getMessage();
+            }
+
+            $response = new JsonResponse();
+            $response->setData(array(
+                'data' => $validation
             ));
-            $this->addFlash("success","Bravo ça marche !");
-            return $this->redirectToRoute("order_prepare");
-        } catch(\Stripe\Error\Card $e) {
+            return $response;
 
-            $this->addFlash("error","Snif ça marche pas :(");
-            return $this->redirectToRoute("order_prepare");
-            // The card has been declined
+        } else {
+            throw new \Exception("You are not authorised to perform this action");
         }
     }
 
     /**
-     * @Route("/order", name="order_prepare")
+     * @Route("/{id}/checkout", name="checkout")
      * @Method({"GET", "POST"})
      */
-    public function prepareorderAction()
+    public function checkoutAction(Request $request, CustomerInfo $customer_info)
     {
-        return $this->render('default/checkout.html.twig');
+        if ($request->getMethod() == 'POST') {
+
+            \Stripe\Stripe::setApiKey("sk_test_uFpH3aKmtmsNrz6ikc7oor7v");
+
+            // Get the credit card details submitted by the form
+            $token = $_POST['stripeToken'];
+            $stripeEmail = $_POST['stripeEmail'];
+
+            $customer = \Stripe\Customer::create(array(
+                  'email' => $stripeEmail,
+                  'card'  => $token
+            ));
+
+            $charge = \Stripe\Charge::create(array(
+                  'customer' => $customer->id,
+                  'amount'   => 5000,
+                  'currency' => 'usd',
+                  "description" => "Paiement Stripe - Fujaco"
+            ));
+
+            $em = $this->getDoctrine()->getManager();
+
+            $customer_model = $customer_info->getCustomer();
+
+            $creditCard = new CreditCard();
+            $creditCard->setCreditCardStripeToken($customer->id);
+            $date = new \DateTime();
+            $creditCard->setCreateDt($date);
+            $creditCard->setUpdateDt($date);
+            $creditCard->setCustomer($customer_model);
+
+            $em->persist($creditCard);
+            $em->flush();
+
+            return $this->render('default/summary.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            ]);
+        }
+        return $this->render('default/summary.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            ]);
     }
+
+
+    
 }

@@ -7,28 +7,28 @@
     <id name="customerInfoId" type="bigint" column="customer_info_id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="customerInfoBusinessType" type="string" column="customer_info_business_type" length="255" nullable="false">
+    <field name="customerInfoBusinessType" type="integer" column="customer_info_business_type" nullable="false">
       <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
       </options>
     </field>
-    <field name="customerInfoIndustry" type="string" column="customer_info_industry" length="255" nullable="false">
+    <field name="customerInfoIndustry" type="integer" column="customer_info_industry" nullable="false">
       <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
       </options>
     </field>
     <field name="customerInfoHasDomain" type="boolean" column="customer_info_has_domain" nullable="false"/>
-    <field name="customerInfoFacebookAdsExpenditure" type="string" column="customer_info_facebook_ads_expenditure" length="255" nullable="false">
+    <field name="customerInfoFacebookAdsExpenditure" type="integer" column="customer_info_facebook_ads_expenditure" nullable="false">
       <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
       </options>
     </field>
-    <field name="customerInfoLeadpagesTarget" type="string" column="customer_info_leadpages_target" length="255" nullable="false">
+    <field name="customerInfoLeadpagesTarget" type="integer" column="customer_info_leadpages_target" nullable="false">
       <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
       </options>
     </field>
-    <field name="customerInfoDomain" type="string" column="customer_info_domain" length="255" nullable="true">
+    <field name="customerInfoDomain" type="string" column="customer_info_domain" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
@@ -43,7 +43,7 @@
         <option name="default">CURRENT_TIMESTAMP</option>
       </options>
     </field>
-    <many-to-one field="customer" target-entity="Customer" inversed-by="customer" fetch="LAZY">
+    <many-to-one field="customer" target-entity="Customer" fetch="LAZY">
       <join-columns>
         <join-column name="customer_id" referenced-column-name="customer_id"/>
       </join-columns>

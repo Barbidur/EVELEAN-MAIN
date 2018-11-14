@@ -3,7 +3,14 @@
 {% block body %}
     <div class="container">
         <form action="#" method="post" id="subdomain_update" role="form" data-toggle="validator">
-            <h2 class="text-center"></h2>
+            <h2 class="text-center">Finalising your account</h2>
+            <br/>
+            <div id="status" style='display:none'>
+                <div class="row">
+                    <p class="text-center">Loading...Please wait</p>
+                    <img src="{{ asset('images/hourglass.gif') }}" class="img-responsive center" >
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -16,11 +23,46 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-6 col-xs-offset-6">
-                    <button type="submit" class="btn btn-primary btn-lg">Continue</button>
-                </div>
-            </div>
+        </form>
+        <br/>
+        {% set customerInfoId = customer_info.customerInfoId %}
+        <form action="{{ path('checkout', {'id': customerInfoId, 'customer_info': customer_info }) }}" method="POST">
+            <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_eh3KOtCG8Jy1GAW7zRejuX3F"
+                    data-amount="5000"
+                    data-name="Fujaco"
+                    data-description="Example charge"
+                    data-locale="auto"
+                    data-currency="usd">
+            </script>
         </form>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#subdomain').on('blur', function(){
+            $.ajax({
+                type: "POST",
+                url: "{{ path('save_subdomain') }}",
+                data: 'subdomain='+ $(this).val()+ '&customer_info_id={{customer_info.customerInfoId}}',
+                dataType: 'JSON',
+                beforeSend: function() {
+                    $('#status').show();
+                },
+                success: function(result) {
+                    $('#status').hide();
+                    if (result.data == 'success' &&  $('#subdomain').val() != '') {
+                        $('#subdomain .check').html('<li class="valid">Subdomain saved</li>');
+                        $('#subdomain').show();
+                    } else {
+                        $('#subdomain .check').html('<li class="invalid">Subdomain could not be saved</li>');
+                        $('#subdomain').show();
+                        $('#subdomain').focus();
+                    }            
+                }
+            });
+        })
+    </script>
 {% endblock %}

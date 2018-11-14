@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<h2 class="text-center">Summary of transaction</h2>
+        <br/>
+
+        <p class="text-center">The following actions were completed:</p>
+        <ul>
+        	<li>Customer account created</li>
+        	<li>Customer additional details saved</li>
+        	<li>Customer subdomain saved</li>
+        	<li>Customer account charged $50</li>
+        </ul>
+	</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

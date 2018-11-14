@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Customer
@@ -84,6 +83,8 @@ class Customer
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $customerId;
+
+
 
     /**
      * Set customerEmail
@@ -310,5 +311,4 @@ class Customer
     {
         return $this->customerId;
     }
-
 }

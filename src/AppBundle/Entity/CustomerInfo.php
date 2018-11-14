@@ -13,16 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class CustomerInfo
 {
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="customer_info_business_type", type="string", length=255, nullable=false)
+     * @ORM\Column(name="customer_info_business_type", type="integer", nullable=false)
      */
     private $customerInfoBusinessType;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="customer_info_industry", type="string", length=255, nullable=false)
+     * @ORM\Column(name="customer_info_industry", type="integer", nullable=false)
      */
     private $customerInfoIndustry;
 
@@ -34,16 +34,16 @@ class CustomerInfo
     private $customerInfoHasDomain;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="customer_info_facebook_ads_expenditure", type="string", length=255, nullable=false)
+     * @ORM\Column(name="customer_info_facebook_ads_expenditure", type="integer", nullable=false)
      */
     private $customerInfoFacebookAdsExpenditure;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="customer_info_leadpages_target", type="string", length=255, nullable=false)
+     * @ORM\Column(name="customer_info_leadpages_target", type="integer", nullable=false)
      */
     private $customerInfoLeadpagesTarget;
 
@@ -92,7 +92,7 @@ class CustomerInfo
     /**
      * Set customerInfoBusinessType
      *
-     * @param string $customerInfoBusinessType
+     * @param integer $customerInfoBusinessType
      *
      * @return CustomerInfo
      */
@@ -106,7 +106,7 @@ class CustomerInfo
     /**
      * Get customerInfoBusinessType
      *
-     * @return string
+     * @return integer
      */
     public function getCustomerInfoBusinessType()
     {
@@ -116,7 +116,7 @@ class CustomerInfo
     /**
      * Set customerInfoIndustry
      *
-     * @param string $customerInfoIndustry
+     * @param integer $customerInfoIndustry
      *
      * @return CustomerInfo
      */
@@ -130,7 +130,7 @@ class CustomerInfo
     /**
      * Get customerInfoIndustry
      *
-     * @return string
+     * @return integer
      */
     public function getCustomerInfoIndustry()
     {
@@ -164,7 +164,7 @@ class CustomerInfo
     /**
      * Set customerInfoFacebookAdsExpenditure
      *
-     * @param string $customerInfoFacebookAdsExpenditure
+     * @param integer $customerInfoFacebookAdsExpenditure
      *
      * @return CustomerInfo
      */
@@ -178,7 +178,7 @@ class CustomerInfo
     /**
      * Get customerInfoFacebookAdsExpenditure
      *
-     * @return string
+     * @return integer
      */
     public function getCustomerInfoFacebookAdsExpenditure()
     {
@@ -188,7 +188,7 @@ class CustomerInfo
     /**
      * Set customerInfoLeadpagesTarget
      *
-     * @param string $customerInfoLeadpagesTarget
+     * @param integer $customerInfoLeadpagesTarget
      *
      * @return CustomerInfo
      */
@@ -202,7 +202,7 @@ class CustomerInfo
     /**
      * Get customerInfoLeadpagesTarget
      *
-     * @return string
+     * @return integer
      */
     public function getCustomerInfoLeadpagesTarget()
     {
