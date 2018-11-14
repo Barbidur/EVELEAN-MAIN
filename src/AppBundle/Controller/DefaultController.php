@@ -95,6 +95,12 @@ class DefaultController extends Controller
             $facebook_ads_expenditure = $request->get('facebook_ads_expenditure');
             $leadpages_target = $request->get('leadpages_target');
 
+            if ($own_domain == "Yes") {
+                $own_domain = 1;
+            } else {
+                $own_domain = 0;
+            }
+
             $customer_info->setCustomerInfoBusinessType($business_type);
             $customer_info->setCustomerInfoIndustry($industry);
             $customer_info->setCustomerInfoHasDomain($own_domain);
