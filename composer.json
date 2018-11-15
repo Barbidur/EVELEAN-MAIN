@@ -33,6 +33,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
+        "stripe/stripe-php": "^6.21",
         "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
