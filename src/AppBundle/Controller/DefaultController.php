@@ -237,13 +237,13 @@ class DefaultController extends Controller
     {
         if ($request->getMethod() == 'POST') {
 
-            \Stripe\Stripe::setApiKey("sk_test_uFpH3aKmtmsNrz6ikc7oor7v");
+            \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
 
             // Get the credit card details submitted by the form
             $token = $_POST['stripeToken'];
             $stripeEmail = $_POST['stripeEmail'];
 
-            $charge = 50;
+            $charge_amt = 50;
 
             $str_charge = $charge."00";
             $stipe_charge = (int)$str_charge;
@@ -278,13 +278,13 @@ class DefaultController extends Controller
             $cust_id = $customer_model->getCustomerId();
 
             $ec2Client = Ec2Client::factory(array(
-                'key'    => 'AKIAJZT5WWC26XKU5B6A',
-                'secret' => '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',
+                'key'    => $this->getParameter('aws_key'),
+                'secret' => $this->getParameter('aws_secret'),
                 'region' => 'eu-west-3', // (e.g., us-east-1)
                 'version' => '2016-11-15',
                 'credentials' => array(
-                    'key'    => 'AKIAJZT5WWC26XKU5B6A',
-                    'secret' => '3csSEBsgG/OMnK6FtvHEs7wSWivS6fLTngcD6cyJ'
+                    'key'    => $this->getParameter('aws_key'),
+                    'secret' => $this->getParameter('aws_secret')
                 )
             ));
 
@@ -384,7 +384,7 @@ class DefaultController extends Controller
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'customer' => $customer_model,
                 'customer_info' => $customer_info,
-                'charge' => $charge,
+                'charge' => $charge_amt,
                 'saveKeyLocation' => $keyloc,
                 'instance' => $instance_model,
             ]);
