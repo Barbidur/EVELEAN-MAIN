@@ -278,13 +278,13 @@ class DefaultController extends Controller
             $cust_id = $customer_model->getCustomerId();
 
             $ec2Client = Ec2Client::factory(array(
-                'key'    => 'AKIAJZT5WWC26XKU5B6A',
-                'secret' => '3csSEBsgG/OMnK6FtvHEs7wSWivS6fLTngcD6cyJ',
+                'key'    => 'key',
+                'secret' => 'secret',
                 'region' => 'eu-west-3', // (e.g., us-east-1)
                 'version' => '2016-11-15',
                 'credentials' => array(
-                    'key'    => 'AKIAJZT5WWC26XKU5B6A',
-                    'secret' => '3csSEBsgG/OMnK6FtvHEs7wSWivS6fLTngcD6cyJ'
+                    'key'    => 'key',
+                    'secret' => 'secret'
                 )
             ));
 
