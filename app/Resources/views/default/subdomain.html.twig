@@ -1,4 +1,4 @@
-{% extends 'base_center.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
     <div class="container">
@@ -23,6 +23,16 @@
                     </div>
                 </div>
             </div>
+             <div class="row">
+                <div class="col-xs-12">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="accept_terms" name="accept_terms"> By clicking here I accept terms and conditions
+                            <span id="helpBlock" class="help-block">You must agree to our terms and conditions to continue.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </form>
         <br/>
         {% set customerInfoId = customer_info.customerInfoId %}
@@ -42,11 +52,21 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $('#subdomain').on('blur', function(){
+        $(document).ready(function(){
+            $('.stripe-button-el').prop("disabled", true);
+        });
+
+        $('#accept_terms').change(function() {
+            if(this.checked) {
+                $('.stripe-button-el').prop("disabled", false);
+            } else {
+                $('.stripe-button-el').prop("disabled", true);
+            }
+
             $.ajax({
                 type: "POST",
                 url: "{{ path('save_subdomain') }}",
-                data: 'subdomain='+ $(this).val()+ '&customer_info_id={{customer_info.customerInfoId}}',
+                data: 'subdomain='+ $('#subdomain').val()+ '&customer_info_id={{customer_info.customerInfoId}}',
                 dataType: 'JSON',
                 beforeSend: function() {
                     $('#status').show();

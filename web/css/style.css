@@ -2,10 +2,11 @@
 	background-color: #FF0000;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	padding-left: 15px;
 }
 
 .logo {
-	width: 150px;
+	max-width: 150px;
 }
 
 .center {

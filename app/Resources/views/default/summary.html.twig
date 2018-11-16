@@ -7,10 +7,12 @@
 
         <p class="text-center">The following actions were completed:</p>
         <ul>
-        	<li>Customer account created</li>
+        	<li>Customer account created with email: {{ customer.customerEmail }} for {{ customer.customerFname}} {{ customer.customerLname }}</li>
         	<li>Customer additional details saved</li>
-        	<li>Customer subdomain saved</li>
-        	<li>Customer account charged $50</li>
+        	<li>Saved subdomain: {{ customer_info.customerInfoDomain }}</li>
+        	<li>Customer account charged ${{ charge }}</li>
+        	<li>Download your Instance key <a href="{{ app.request.getBaseURL() }}/{{ saveKeyLocation }}">here</a></li>
+        	<li>AWS EC2 instance, with ID: {{ instance.instanceAwsId }} and name: {{ instance.instanceAwsName }}, created and launched</li>
         </ul>
 	</div>
 {% endblock %}

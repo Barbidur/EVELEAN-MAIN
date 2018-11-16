@@ -7,10 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Filesystem\Filesystem;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\CustomerInfo;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CreditCard;
+use AppBundle\Entity\Instance;
+use Aws\Ec2\Ec2Client;
 
 class DefaultController extends Controller
 {
@@ -93,7 +96,7 @@ class DefaultController extends Controller
             $industry = $request->get('industry');
             $own_domain = $request->get('own_domain');
             $facebook_ads_expenditure = $request->get('facebook_ads_expenditure');
-            $leadpages_target = $request->get('leadpages_target');
+            $leadpages_target = $request->get('evelean_target');
 
             if ($own_domain == "Yes") {
                 $own_domain = 1;
@@ -106,7 +109,7 @@ class DefaultController extends Controller
             $customer_info->setCustomerInfoHasDomain($own_domain);
             $customer_info->setCustomerInfoFacebookAdsExpenditure($facebook_ads_expenditure);
             $customer_info->setCustomerInfoLeadpagesTarget($leadpages_target);
-            $subdomain = "https://subdomain.evelean.com";
+            $subdomain = 'https://subdomain.evelean.com';
             $customer_info->setCustomerInfoDomain($subdomain);
             $date = new \DateTime();
             $customer_info->setCreateDt($date);
@@ -240,6 +243,11 @@ class DefaultController extends Controller
             $token = $_POST['stripeToken'];
             $stripeEmail = $_POST['stripeEmail'];
 
+            $charge = 50;
+
+            $str_charge = $charge."00";
+            $stipe_charge = (int)$str_charge;
+
             $customer = \Stripe\Customer::create(array(
                   'email' => $stripeEmail,
                   'card'  => $token
@@ -247,7 +255,7 @@ class DefaultController extends Controller
 
             $charge = \Stripe\Charge::create(array(
                   'customer' => $customer->id,
-                  'amount'   => 5000,
+                  'amount'   => $stipe_charge,
                   'currency' => 'usd',
                   "description" => "Paiement Stripe - Fujaco"
             ));
@@ -266,15 +274,123 @@ class DefaultController extends Controller
             $em->persist($creditCard);
             $em->flush();
 
+            $customer_model = $customer_info->getCustomer();
+            $cust_id = $customer_model->getCustomerId();
+
+            $ec2Client = Ec2Client::factory(array(
+                'key'    => 'AKIAJZT5WWC26XKU5B6A',
+                'secret' => '3csSEBsgG/OMnK6FtvHEs7wSWivS6fLTngcD6cyJ',
+                'region' => 'eu-west-3', // (e.g., us-east-1)
+                'version' => '2016-11-15',
+                'credentials' => array(
+                    'key'    => 'AKIAJZT5WWC26XKU5B6A',
+                    'secret' => '3csSEBsgG/OMnK6FtvHEs7wSWivS6fLTngcD6cyJ'
+                )
+            ));
+
+            $keyPairName = 'my-keypair'.$cust_id;
+            $keypair = $ec2Client->createKeyPair(array(
+                'KeyName' => $keyPairName
+            ));
+
+            $keypair = $keypair->toArray();
+            //print_r($keypair); die();
+
+            $base_path = $this->get('kernel')->getProjectDir();
+            // Save the private key
+
+            if( !is_dir($base_path.'\web/\/'.$cust_id)) {
+                mkdir($base_path.'\web/\/'.$cust_id, 0777, true);
+            }
+
+            $saveKeyLocation = $base_path. '\web/\/'.$cust_id. '/\/'. $keyPairName .".pem";
+            $keyloc = $cust_id."/{$keyPairName}.pem";
+            file_put_contents($saveKeyLocation, $keypair['KeyMaterial']);
+
+            // Update the key's permissions so it can be used with SSH
+            chmod($saveKeyLocation, 0600);
+
+            // Create the security group
+            $securityGroupName = 'my-security-group'.$cust_id;
+            $securityGroup = $ec2Client->createSecurityGroup(array(
+                'GroupName'   => $securityGroupName,
+                'Description' => 'Basic web server security'
+            ));
+
+            // Get the security group ID (optional)
+            $securityGroupId = $securityGroup->get('GroupId');
+
+            // Set ingress rules for the security group
+            $ec2Client->authorizeSecurityGroupIngress(array(
+                'GroupName'     => $securityGroupName,
+                'IpPermissions' => array(
+                    array(
+                        'IpProtocol' => 'tcp',
+                        'FromPort'   => 80,
+                        'ToPort'     => 80,
+                        'IpRanges'   => array(
+                            array('CidrIp' => '0.0.0.0/0')
+                        ),
+                    ),
+                    array(
+                        'IpProtocol' => 'tcp',
+                        'FromPort'   => 22,
+                        'ToPort'     => 22,
+                        'IpRanges'   => array(
+                            array('CidrIp' => '0.0.0.0/0')
+                        ),
+                    )
+                )
+            ));
+
+            $instance_name = str_replace('.evelean.com', '', $customer_info->getCustomerInfoDomain());
+            $instance_name = str_replace('https://', '', $instance_name);
+
+            // Launch an instance with the key pair and security group
+            $instance = $ec2Client->runInstances(array(
+                'ImageId'        => 'ami-08182c55a1c188dee', //change this to required AMI
+                'MinCount'       => 1,
+                'MaxCount'       => 1,
+                'InstanceType'   => 't2.micro',
+                'KeyName'        => $keyPairName,
+                'SecurityGroups' => array($securityGroupName)
+            ));
+
+            $instance = $instance->toArray();
+
+            $instanceId = $instance['Instances'][0]['InstanceId']; //get array of Instances
+
+            $tag = $ec2Client->createTags(array(
+                'Resources' => array($instanceId),
+                'Tags' => array(
+                    array(
+                        'Key' => 'Name',
+                        'Value' => $instance_name
+                    )
+                )
+            ));
+
+            $instance_model = new Instance();
+            $instance_model->setInstanceAwsId($instanceId);
+            $instance_model->setInstanceAwsName($instance_name);
+            $instance_model->setCreateDt($date);
+            $instance_model->setUpdateDt($date);
+            $instance_model->setCustomer($customer_model);
+
+            $em->persist($instance_model);
+            $em->flush();
+
             return $this->render('default/summary.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                'customer' => $customer_model,
+                'customer_info' => $customer_info,
+                'charge' => $charge,
+                'saveKeyLocation' => $keyloc,
+                'instance' => $instance_model,
             ]);
         }
         return $this->render('default/summary.html.twig', [
-                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            ]);
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]);
     }
-
-
-    
 }
