@@ -299,11 +299,11 @@ class DefaultController extends Controller
             $base_path = $this->get('kernel')->getProjectDir();
             // Save the private key
 
-            if( !is_dir($base_path.'\web/\/'.$cust_id)) {
-                mkdir($base_path.'\web/\/'.$cust_id, 0777, true);
+            if( !is_dir($base_path.'/web/'.$cust_id)) {
+                mkdir($base_path.'/web/'.$cust_id, 0777, true);
             }
 
-            $saveKeyLocation = $base_path. '\web/\/'.$cust_id. '/\/'. $keyPairName .".pem";
+            $saveKeyLocation = $base_path. '/web/'.$cust_id. '/'. $keyPairName .".pem";
             $keyloc = $cust_id."/{$keyPairName}.pem";
             file_put_contents($saveKeyLocation, $keypair['KeyMaterial']);
 

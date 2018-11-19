@@ -5,7 +5,7 @@ parameters:
     database_name: evelean
     database_user: evelean
     database_password: evelean2018
-    database_host_dev: 127.0.0.1
+    database_host_dev: evelean.ci8bgbxtjndu.eu-west-3.rds.amazonaws.com
     database_port_dev: 3306
     database_name_dev: evelean
     database_user_dev: evelean
@@ -15,5 +15,7 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: ThisTokenIsNotSoSecretChangeIt
-    stripe_public_key: pk_test_eh3KOtCG8Jy1GAW7zRejuX3F
-    stripe_secret_key: sk_test_uFpH3aKmtmsNrz6ikc7oor7v
+    stripe_public_key: 
+    stripe_secret_key: 
+    aws_key: 
+    aws_secret: 
