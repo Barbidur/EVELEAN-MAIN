@@ -245,7 +245,7 @@ class DefaultController extends Controller
 
             $charge_amt = 50;
 
-            $str_charge = $charge."00";
+            $str_charge = $charge_amt."00";
             $stipe_charge = (int)$str_charge;
 
             $customer = \Stripe\Customer::create(array(
