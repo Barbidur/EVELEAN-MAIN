@@ -15,6 +15,7 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "aws/aws-sdk-php-symfony": "^2.0",
         "components/jquery": "^3.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
@@ -34,6 +35,7 @@
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "stripe/stripe-php": "^6.21",
+        "aws/aws-sdk-php-symfony": "^2.0",
         "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
